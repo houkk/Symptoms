@@ -1,0 +1,34 @@
+<style>
+    label {
+        font-weight: 200;
+        margin-left: 6px;
+    }
+    input[type=checkbox]{
+        width: 15px;
+        height: 15px;
+    }
+</style>
+
+
+<!--权限设置功能-->
+<h2 class="sub-header">权限设置</h2>
+<div id="docToolbar" class="btn-group table-control">
+    <input type="checkbox" id="notYet">
+    <label for="notYet">未审核</label>
+</div>
+
+<!--table field-->
+<div id="table">
+    <table class="table-control" id="docTable" data-search="true" data-show-refresh="true" data-toolbar="#docToolbar"
+           data-pagination="true">
+        <thead>
+        <tr>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+
+<!--itself js-->
+<script src="../template/modules/authority/authority.js"></script>

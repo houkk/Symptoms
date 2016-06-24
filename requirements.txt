@@ -1,0 +1,15 @@
+flask
+flask-mongoengine
+flask-script
+flask-mongorest
+mimerender
+flask-bcrypt
+flask-login
+flask-cors
+flask-excel
+pyexcel-xls
+pyexcel-xlsx
+flask-mail
+flask-restful
+flask-views
+simplejson

@@ -1,0 +1,195 @@
+<script src="../template/modules/network-pharmacology/drugGroup.js"></script>
+<style>
+    li a{
+        cursor: pointer;
+    }
+     .myrow {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        margin-top: 10px;
+        padding-left: 10px;
+    }
+    div>span {
+        margin-top: 10px;
+    }
+    select{
+		padding: 5px;
+			width: 350px;
+			height: 36px;
+
+    }
+
+</style>
+
+<h2 class="sub-header">药物组合数据库</h2>
+
+<!--下拉框选择-->
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="true">
+        请选择数据库
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li onclick="turnPage('../template/modules/network-pharmacology/network-pharmacology.html')"><a>基因基本信息数据库</a></li>
+        <li onclick="turnPage('../template/modules/network-pharmacology/drug.html')"><a>药物基本信息数据库</a></li>
+        <li onclick="turnPage('../template/modules/network-pharmacology/path.html')"><a>通路基本信息数据库</a></li>
+        <li onclick="turnPage('../template/modules/network-pharmacology/disease.html')"><a>疾病基本信息数据库</a></li>
+        <li onclick="turnPage('../template/modules/network-pharmacology/drug-drug.html')"><a>药物-药物相互作用</a></li>
+        <li onclick="turnPage('../template/modules/network-pharmacology/disease-gene.html')"><a>疾病-基因关联</a></li>
+        <li onclick="turnPage('../template/modules/network-pharmacology/drug-gene.html')"><a>药物-基因关联</a></li>
+        <li onclick="turnPage('../template/modules/network-pharmacology/drugGroup.html')"><a>药物组合</a></li>
+        <li onclick="turnPage('../template/modules/network-pharmacology/gene-gene.html')"><a>基因-基因关联</a></li>
+    </ul>
+</div>
+
+<div id="docToolbar" class="btn-group table-control">
+    <button type="button" class="btn btn-default" id="addDoc" title="添加">
+        <i class="glyphicon glyphicon-plus"></i>
+    </button>
+    <button type="button" class="btn btn-default" id="editDoc" title="编辑">
+        <i class="glyphicon glyphicon-edit"></i>
+    </button>
+    <button type="button" class="btn btn-default" id="deleteDoc" title="删除">
+        <i class="glyphicon glyphicon-trash"></i>
+    </button>
+</div>
+
+<!--药物组合表格-->
+<div id="drugGroupTableOuter" style="margin-top: 30px">
+    <h4 style="margin-bottom: 5px">药物组合数据库</h4>
+    <div class="search" style="float:right;margin-top: 10px;margin-left: 5px">
+        <input class="form-control" type="text" id="search" onkeyup="searchEvent()" placeholder="搜索">
+    </div>
+    <table class="table-control" id="drug-groupTable" data-show-refresh="true" data-toolbar="#docToolbar"
+           data-pagination="true" data-show-columns="true">
+    </table>
+</div>
+
+<!--hide edit and add panel-->
+<div class="row" style="display: none;margin-top: 30px" id="docPanel">
+    <div class="col-md-12 ">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h4 class="panel-title" id="changePanelName">添加信息</h4>
+            </div>
+            <form id="docForm" method="post">
+                <div id="validateForm">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="row myrow">
+                                    <div class="col-md-7">
+                                        <label>药物名称</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>药物剂量</label>
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <button  id="addGroup" class="btn btn-default" style="margin-left: 25px">添加</button>
+                                </div>
+                           <!--     <div class="row myrow groupRow">
+                                    <div class="col-md-3">
+                                        <label>药物剂量组合</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='drugcombinationdosage' type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-3">
+                                        <label>药物组合配方</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='drugcombinationformulation' type="text" class="form-control">
+                                    </div>
+                                </div>-->
+                                <div class="row myrow">
+                                    <div class="col-md-3">
+                                        <label>疾病</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='disease' type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-3">
+                                        <label>效果</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='effect' type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-3">
+                                        <label>协同作用</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='synergy' type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-3">
+                                        <label>临床阶段</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='clinicalphase' type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-3">
+                                        <label>资源</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='resource' type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-3">
+                                        <label>依据</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='ref' type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-3">
+                                        <label>文献数据库id</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='pubmedid' type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-3">
+                                        <label>副作用</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='sideeffect' type="text" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--row-->
+                    </div>
+
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-offset-10">
+                                <button class="btn btn-default" id="cancel">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+                                <button type="submit" class="btn btn-success" id="create">
+                                    &nbsp;&nbsp;创建&nbsp;&nbsp;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--col-md-10-->
+</div>

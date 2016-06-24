@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>中医症候临床辩证数据库系统</title>
+
+    <!--specialize css-->
+    <link href="../template/styles/css/bootstrap.min.css" rel="stylesheet">
+        <!--select-->
+   <!-- <link href="../template/styles/css/select2.min.css" rel="stylesheet">-->
+    <link href="../template/styles/css/fm.selectator.jquery.css" rel="stylesheet">
+    <!--bootstrap table-->
+    <link href="../template/styles/css/bootstrap-table.min.css" rel="stylesheet">
+    <!--datetimepicker-->
+    <link href="../template/styles/css/bootstrap-datetimepicker.min.css">
+    <!--font awesome-->
+    <link href="../template/styles/css/font-awesome.css" rel="stylesheet">
+    <!--icheck-->
+    <link href="../template/styles/css/square/blue.css" rel="stylesheet">
+    <!--mystyle css-->
+    <link href="../template/styles/css/dashboard.css" rel="stylesheet">
+
+    <!--specialize js-->
+    <script src="../template/plugins/jquery/jquery-2.1.4.min.js"></script>
+    <script src="../template/plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="../template/plugins/bootstrap/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../template/plugins/bootstrap/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="../template/plugins/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
+    <!--<script src="../template/plugins/select/select2.min.js"></script>-->
+    <script src="../template/plugins/select/fm.selectator.jquery.js"></script>
+    <script src="../template/plugins/icheck/icheck.min.js"></script>
+    <!--<script src="../template/plugins/bootstrap/bootstrapValidator.js"></script>-->
+
+    <script src="../template/plugins/bootstrap/bootstrap-table-zh-CN.min.js"></script>
+
+    <!--common js-->
+    <script src="../template/common.js"></script>
+
+</head>
+<body>
+<!--顶部导航条-->
+<nav class="navbar navbar-inverse navbar-fixed-top nav_color" style="height: auto">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="font-size:20px;">中医证候临床辩证数据库系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 50px">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="hide"><a href="#" id="userId"></a></li>
+                        <li><a href="#" id="username"></a></li>
+                        <li><a href="#" id="email"></a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" id="changePassword"><i class="fa fa-database fa-fw"></i>&nbsp;修改密码</a>
+                        <li><a href="#" id="logout"><i class="fa fa-sign-out fa-fw"></i>&nbsp;注销</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="查找...">
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!--侧边栏-->
+<div class="container-fluid">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar" style="overflow-y: auto">
+
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="content">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

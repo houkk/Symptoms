@@ -1,0 +1,144 @@
+<script src="../template/plugins/ajaxfileupload/ajaxfileupload.js"></script>
+<script src="../template/modules/delphi/delphi.js"></script>
+
+<style>
+    .myrow {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .myborder {
+        margin: 1px;
+        margin-top: 10px;
+        padding-bottom: 30px;
+        border: 1px solid #eee;
+        border-radius: 3px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    span {
+        margin-top: 10px;
+    }
+
+    label {
+        margin-top: 10px;
+        padding-left: 20px;
+    }
+
+    .form-control {
+        display: inline;
+        width: 80%;
+    }
+
+    #upfile {
+        margin-bottom: 20px;
+    }
+</style>
+<h2 class="sub-header">改良德尔菲法专家数据库</h2>
+<!--<button id="dynamicAdd" class="btn btn-default">+动态添加数据</button>
+<button class="btn btn-default">导入excel</button>-->
+<div id='add' class="row myborder form-group">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="row myrow">
+            <div class="col-md-2">
+                <label>作者</label>
+            </div>
+            <div class="col-md-9">
+                <input id='authorname' type="text" class="form-control" placeholder="作者">
+            </div>
+        </div>
+        <div class="row myrow">
+            <div class="col-md-2">
+                <label>文献</label>
+            </div>
+            <div class="col-md-9">
+                <input id='literaturename' type="text" class="form-control" placeholder="文献名">
+            </div>
+        </div>
+        <div class="row myrow">
+            <div class="col-md-2">
+                <label>链接</label>
+            </div>
+            <div class="col-md-9">
+                <input id='interlink' type="text" class="form-control" placeholder="链接">
+            </div>
+        </div>
+        <div class="row myrow hide">
+            <div class="col-md-2">
+                <input id='label3' type="text" class="form-control" placeholder="">
+            </div>
+            <div class="col-md-9">
+                <input id='input3' type="text" class="form-control" placeholder="文献">
+            </div>
+            <div class="col-md-1">
+                <span class="glyphicon glyphicon-remove" aria-label="删除"></span>
+            </div>
+        </div>
+        <div class="row myrow hide">
+            <div class="col-md-2">
+                <input id='label4' type="text" class="form-control" placeholder="">
+            </div>
+            <div class="col-md-9">
+                <input id='input4' type="text" class="form-control" placeholder="作者">
+            </div>
+            <div class="col-md-1">
+                <span class="glyphicon glyphicon-remove" aria-label="删除"></span>
+            </div>
+        </div>
+        <div class="row myrow hide">
+            <div class="col-md-2">
+                <input id='label5' type="text" class="form-control" placeholder="">
+            </div>
+            <div class="col-md-9">
+                <input id='input5' type="text" class="form-control" placeholder="链接">
+            </div>
+            <div class="col-md-1">
+                <span class="glyphicon glyphicon-remove" aria-label="删除"></span>
+            </div>
+        </div>
+        <div class="row myrow">
+            <div class="col-md-9 col-md-offset-2">
+                <button id='save' class="btn btn-default">保存</button>
+                <button id='addAtt' class="btn btn-default">添加新属性</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id='export' class="row myborder form-group">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="row myrow">
+            <div class="col-md-2">
+                <label>导入数据</label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" id="upfile" class="form-control" readonly="readonly">
+                <input type="button" value="浏览" onclick="file1.click()" class="btn btn-default">
+                <input type="file" id="file1" name="file" accept="application/xls,application/cvs" class="hide"
+                       onchange="upfile.value=this.value.substring(12)"/>
+                <input type="submit" onclick="Uploadfile()" class="btn btn-default" value="上传"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div id='download' class="row myborder form-group">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="row myrow">
+            <div class="col-md-2">
+                <label>下载模板</label>
+            </div>
+            <div class="col-md-9">
+                <form action="/basisdown/" method="get"><p>
+                    <input type="submit" value="下载模板" class="btn btn-default">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<table id="sample-table-sleep">
+</table>-->
+

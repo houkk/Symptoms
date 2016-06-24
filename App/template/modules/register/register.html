@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RegisterPage</title>
+    <link rel="stylesheet" type="text/css" href="../template/styles/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../template/styles/css/account.css"/>
+
+    <script src="../template/plugins/jquery/jquery-2.1.4.min.js"></script>
+
+    <script src="../template/modules/register/register.js"></script>
+
+</head>
+<body>
+<div>
+    <div class="login">
+        <div>中医证候临床辨证数据库系统</div>
+        <span>请输入注册信息</span>
+
+        <div>
+            <div class="form-group">
+                <input id="username2" spellcheck=false class="form-control" type="text" size="18" placeholder="用户名">
+                <label class="hide"> <i class="glyphicon glyphicon-exclamation-sign"></i>请输入用户名!</label>
+            </div>
+            <div class="form-group">
+                <input id="password2" class="form-control" spellcheck=false type="password" size="18" placeholder="密码">
+                <label class="hide"><i class="glyphicon glyphicon-exclamation-sign"></i>请输入密码!</label>
+            </div>
+            <div class="form-group">
+                <input id="passwordConfirm" class="form-control" spellcheck=false type="password" size="18"
+                       placeholder="确认密码">
+                <label class="hide"><i class="glyphicon glyphicon-exclamation-sign"></i>请确认密码!</label>
+            </div>
+            <div class="form-group">
+                <input id="email" class="form-control" spellcheck=false type="text" size="18" placeholder="邮箱">
+                <label class="hide"><i class="glyphicon glyphicon-exclamation-sign"></i>请输入邮箱!</label>
+            </div>
+            <div class="form-group">
+                <button type="submit" id="register" class="btn btn-lg btn-primary btn-block">注册</button>
+                <a style="margin-right: 15px;float: right;font-weight: 200" id="returnLogin">返回登录
+                    <i class="glyphicon glyphicon-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

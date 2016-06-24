@@ -1,0 +1,572 @@
+<script src="../template/modules/level-analysis/levelAnalysis_phlegm.js"></script>
+<style>
+    .panel .col-md-2, .panel .col-md-3, .panel .col-md-1 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .supply {
+        width: 80%;
+    }
+
+    #radiopanel .panel-body {
+        padding-left: 40px;
+    }
+
+
+    #addques {
+        float: left;
+        margin-bottom: 10px;
+    }
+
+    .hide {
+        display: none;
+    }
+    #totop div {
+        height: 50px;
+        width: 50px;
+        padding-left: 15px;
+        padding-top: 14px;
+        background-color: #1d7db1;
+        opacity: 0.8;
+        border-radius: 25px;
+        position: fixed;
+        margin-left: 1200px;
+        margin-top: 650px;
+        z-index: 1000;
+    }
+
+    #totop div span {
+        color: #ffffff;
+        font-size: 20px;
+    }
+
+    .table > tbody > tr > td {
+        vertical-align: middle;
+        height: 45px;
+    }
+
+    table {
+        table-layout: fixed;
+    }
+
+    .btn-date {
+        float: right;
+        width: 200px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+
+    }
+
+    .div-date {
+        float: right;
+        padding-top: 8px;
+        margin-bottom: 10px;
+    }
+
+     .mycol-md-3{
+        float: left;
+        width: 25%;
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-bottom: 15px;
+    }
+    .mycol-md-2{
+        float: left;
+        width: 13%;
+        padding-bottom: 15px;
+
+    }
+    .mycol-md-1{
+        float: left;
+        width: 10%;
+    }
+
+    textarea.form-control {
+        height: 34px;
+        max-width: 150px;
+        max-height: 100px;
+    }
+
+</style>
+<div id="nav-head" style="margin-top: -50px;position: absolute"></div><!--回到顶部定位点-->
+<h2 class="sub-header">冠心病痰湿证层次分析法数据库</h2>
+
+<!--回到顶部图标-->
+<a href="#nav-head" id='totop'>
+    <div>
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+</a>
+
+<!--table表格-->
+<div class="row" id="levelAnalysis">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-default" id="addques">
+            <a href="#nav-middle" style="text-decoration: none"><i
+                    class="glyphicon glyphicon-plus"></i>创建新问卷</a>
+        </button>
+        <div class="input-group date form_date btn-date" data-date-format="yyyy-mm-dd"
+             data-link-field="dtp_input1">
+            <input id="foot-date" class="form-control" type="text" onchange="dateChange()" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+        <div class="input-group date form_date btn-date" data-date-format="yyyy-mm-dd"
+             data-link-field="dtp_input1">
+            <input id="head-date" class="form-control" type="text" onchange="dateChange()" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+        <div class="input-group div-date"> 日期选择：</div>
+        <table id="levelAnalysisTable"></table>
+    </div>
+</div>
+
+<div id="nav-middle" style="margin-top: -50px;position: absolute"></div><!--问卷开始定位点-->
+
+<!--冠心病痰瘀互结证层次分析法专家咨询问卷-->
+<div class="row hide" id="questionare" style="margin-top: 20px">
+    <div class="col-md-12">
+        <div class="panel-heading" style="font-weight: 700">专家信息</div>
+           <table class="table table-bordered" id="expertdata">
+            <tbody>
+            <tr style="font-weight: bold">
+                <th style="width:10%">姓名</th>
+                <th style="width:10%">性别</th>
+                <th style="width:10%">年龄</th>
+                <th style="width:10%">职称</th>
+                <th style="width:13%">工作单位</th>
+                <th style="width:13%">专业或研究方向</th>
+                <th style="width:12%">联系电话</th>
+                <th style="width:12%">email</th>
+                <th style="width:10%">在标准发布时<br>是否同意署名</th>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" name="expertname" id="expertname" placeholder="按Enter键"></td>
+                <td><select class="form-control" name="expertgender">
+                        <option value ="男">男</option>
+                        <option value ="女">女</option>
+                    </select>
+                </td>
+                <td><input type="text" class="form-control" name="expertage" onblur="ageJudge(this)"></td>
+                <td><select class="form-control" name="professionaltitle">
+                        <option value ="正高级">正高级</option>
+                        <option value ="副高级">副高级</option>
+                        <option value ="中级">中级</option>
+                        <option value ="初级">初级</option>
+                        <option value ="其它">其它</option>
+                    </select>
+                <td><textarea class="form-control" name="workunits"></textarea></td>
+                <td><textarea class="form-control" name="researchdirection"></textarea></td>
+                <td><input type="text" class="form-control" name="phonenumber" onblur="phoneJudge(this)"></td>
+                <td><input type="text" class="form-control" name="expertemail" onblur="emailJudge(this)"></td>
+                <td><select class="form-control" name="signature">
+                        <option value ="同意">同意</option>
+                        <option value ="不同意">不同意</option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="panel-heading" style="font-weight: 700">与冠心病痰湿证相关的理化指标选择</div>
+        <div class="panel panel-default" id="indicators">
+            <div class="panel-body">
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        1、血脂
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="bloodfat" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="bloodfat" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="bloodfat" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="bloodfat" value="4"/><span>不太重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="bloodfat" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        2、血糖
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="bloodsugar" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="bloodsugar" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="bloodsugar" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="bloodsugar" value="4"/><span>不太重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="bloodsugar" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        3、血浆同型半胱氨酸(HCY)
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="hcy" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="hcy" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="hcy" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="hcy" value="4"/><span>不重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="hcy" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        4、C反应蛋白（CRP）
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="crp" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="crp" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="crp" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="crp" value="4"/><span>不太重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="crp" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        5、脂蛋白
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="lipoprotein" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="lipoprotein" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="lipoprotein" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="lipoprotein" value="4"/><span>不太重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="lipoprotein" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        6、炎症因子
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="inflammation" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="inflammation" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="inflammation" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="inflammation" value="4"/><span>不太重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="inflammation" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        7、超声心动图（室壁异常运动）
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="ultrasoniccardiogram" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="ultrasoniccardiogram" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="ultrasoniccardiogram" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="ultrasoniccardiogram" value="4"/><span>不太重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="ultrasoniccardiogram" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        8、冠状动脉造影（冠脉斑块特征、狭窄病变分型、冠脉血流分级）
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="coronaryangiography" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="coronaryangiography" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="coronaryangiography" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="coronaryangiography" value="4"/><span>不太重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="coronaryangiography" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <button class="btn btn-default" id="additem">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-md-offset-2">
+        <div id='radiopanel' class="panel panel-default">
+            <div class="panel-heading" style="font-weight: 700">冠心病痰湿证专家咨询问卷</div>
+            <div class="panel-body">
+                <form class="form-horizontal" id="table_input">
+                    <div style="margin-top: 10px">
+                        <h4>冠心病痰湿证辨证一级指标判断矩阵</h4>
+                        <table class="table table-bordered table-hover table-condensed bg-white-only">
+                            <tbody>
+                            <tr>
+                                <td>痰湿证候</td>
+                                <td>临床症状</td>
+                                <td>舌象</td>
+                                <td>脉象</td>
+                            </tr>
+                            <tr>
+                                <td><span>临床症状</span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel1_tongue">
+                                <td><span>舌象</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel1_pulse">
+                                <td><span>脉象</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="margin-top: 30px">
+                        <h4>冠心病痰湿证辨证二级指标临床症状判断矩阵</h4>
+                        <table class="table table-bordered table-hover table-condensed bg-white-only">
+                            <tbody>
+                            <tr>
+                                <td style="width: 10%">临床症状</td>
+                                <td style="width: 10%">胸闷、胸痛</td>
+                                <td style="width: 8%">肢体困重</td>
+                                <td style="width: 7%">呕恶</td>
+                                <td style="width: 8%">脘腹痞满</td>
+                                <td style="width: 7%">体胖</td>
+                                <td style="width: 7%">纳呆</td>
+                                <td style="width: 7%">口黏</td>
+                                <td style="width: 10%">面色晦浊</td>
+                                <td style="width: 8%">嗜睡</td>
+                            </tr>
+                            <tr>
+                                <td><span>胸闷、胸痛</span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2clinical_bodyheavy">
+                                <td><span>肢体困重</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2clinical_oue">
+                                <td><span>呕恶</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2clinical_abdominalfullness">
+                                <td><span>脘腹痞满</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2clinical_bodyfat">
+                                <td><span>体胖</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2clinical_anorexia">
+                                <td><span>纳呆</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2clinical_mouthstick">
+                                <td><span>口黏</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2clinical_facedark">
+                                <td><span>面色晦浊</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2clinical_sleepiness">
+                                <td><span>嗜睡</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="margin-top: 30px">
+                        <h4>冠心病痰湿证辨证二级指标舌象判断矩阵</h4>
+                        <table class="table table-bordered table-hover table-condensed bg-white-only">
+                            <tbody>
+                            <tr>
+                                <td>舌象</td>
+                                <td>舌胖边有齿痕</td>
+                                <td>苔腻</td>
+                                <td>苔白滑</td>
+                            </tr>
+                            <tr>
+                                <td><span>舌胖边有齿痕</span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2tongue_mossgreasy">
+                                <td><span>苔腻</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2tongue_mossgwhite">
+                                <td><span>苔白滑</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="margin-top: 30px">
+                        <h4>冠心病痰湿证辨证二级指标脉象判断矩阵</h4>
+                        <table class="table table-bordered table-hover table-condensed bg-white-only">
+                            <tbody>
+                            <tr>
+                                <td>脉象</td>
+                                <td>脉滑</td>
+                                <td>脉濡</td>
+                                <td>脉缓</td>
+                            </tr>
+                            <tr>
+                                <td><span>脉滑</span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2pulse_pulsemoist">
+                                <td><span>脉濡</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr id="CHDLevel2pulse_pulsedelay">
+                                <td><span>脉缓</span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span><input type="text" class="form-control"></span></td>
+                                <td><span>1</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <button class="btn btn-default btn-primary" id="save-ques"></button>
+    </div>
+</div>
+
+
+

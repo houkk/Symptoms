@@ -1,0 +1,1727 @@
+<link rel="stylesheet" href="../template/styles/css/bootstrap-datetimepicker.min.css">
+<script src="../template/modules/clinical-cohort/clinical-cohort.js"></script>
+
+<style>
+    .panel .col-md-2, .panel .col-md-3, .panel .col-md-1 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .supply {
+        width: 80%;
+    }
+
+
+    .hide {
+        display: none;
+    }
+
+
+    #totop div {
+        height: 50px;
+        width: 50px;
+        padding-left: 15px;
+        padding-top: 14px;
+        background-color: #1d7db1;
+        opacity: 0.8;
+        border-radius: 25px;
+        position: fixed;
+        margin-left: 1200px;
+        margin-top: 650px;
+        z-index: 1000;
+    }
+
+    #totop div span {
+        color: #ffffff;
+        font-size: 20px;
+    }
+
+    #addques {
+        float: left;
+        margin-bottom: 10px;
+    }
+
+    .btn-date {
+        float: right;
+        width: 200px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+
+    }
+
+    .div-date {
+        float: right;
+        padding-top: 8px;
+        margin-bottom: 10px;
+
+    }
+    /*从这儿开始是这个的style*/
+    .mycol-md{
+        float: left;
+        width: 95%;
+    }
+    .mycol-offset-md{
+        margin-left:2.5%;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+</style>
+
+<div id="nav-head" style="margin-top: -50px;position: absolute"></div><!--回到顶部定位点-->
+<h2 class="sub-header">临床队列研究数据库</h2>
+
+<!--回到顶部图标-->
+<a id='totop'>
+    <div>
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+</a>
+
+<!--table表格-->
+<div class="row" id="delphi2">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-default" id="addques">
+            <a style="text-decoration: none"><i class="glyphicon glyphicon-plus"></i>创建新问卷</a>
+        </button>
+        <div class="input-group date form_date btn-date" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+            <input id="foot-date" class="form-control" type="text" onchange="dateChange()" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+        <div class="input-group date form_date btn-date" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+            <input id="head-date" class="form-control" type="text" onchange="dateChange()" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+        <div class="input-group div-date"> 日期选择：</div>
+        <table id="cliqueueTable" data-toolbar=""></table>
+    </div>
+</div>
+
+<div id="nav-middle" style="margin-top: -50px;position: absolute"></div><!--问卷开始定位点-->
+
+<!--冠心病痰瘀互结证德尔菲法专家咨询问卷-->
+<div class="row hide" id="questionare" style="margin-top: 20px">
+    <div class="col-md-12">
+        人口学资料
+        <hr>
+        <table class="table table-bordered" id="peopledata">
+            <tbody>
+            <tr style="font-weight: bold">
+                <td style="width:20%">姓名</td>
+                <td style="width:10%">组别</td>
+                <td style="width:10%">性别</td>
+                <td style="width:10%">年龄</td>
+                <td style="width:10%">民族</td>
+                <td style="width:10%">地区</td>
+                <td style="width:10%">血压</td>
+                <td style="width:20%">空腹血糖</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" name="name" id="peoplename" placeholder="可按Enter键填充人口学资料">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="group">
+                </td>
+                <td>
+                    <select class="form-control" name="gender">
+                        <option value ="男">男</option>
+                        <option value ="女">女</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="age" onblur="ageJudge(this)">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="national">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="region">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="bloodpressure">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="bloodsugar">
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        量表学评价
+        <hr>
+        <div class="panel panel-default" id="chd">
+            <div class="panel-heading">冠心病稳定型心绞痛(痰瘀互结证)证候疗效评价计分表</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">1.胸痛：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <table class="table table-bordered circle">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    频率
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpfrequency" value="0"/><span> 一周内无发作</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpfrequency" value="1"/><span> 每周发作≦6次</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpfrequency" value="2"/><span> 每日发作1-3次</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpfrequency" value="3"/><span> 每日发作4次以上</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    持续时间
+                                </td>
+                                <td>
+                                    <input type="radio" name="cplasttime" value="0"/><span> 无</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cplasttime" value="1"/><span> ≦5分钟</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cplasttime" value="2"/><span> >5分钟；<10分钟</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cplasttime" value="3"/><span> ≦10分钟</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    程度
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpdegree" value="0"/><span> 无</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpdegree" value="1"/><span> 疼痛不重，有时需舌下含服药物</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpdegree" value="2"/><span> 疼痛较重，一般都需要舌下含服药物</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpdegree" value="3"/><span> 疼痛难忍，需多次舌下含服药物</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    运动耐量
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpextolerance" value="0"/><span> 一般体力活动不引起心绞痛</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpextolerance" value="1"/><span> 日常体力活动稍受限制，快步行走或上楼、登高、饭后行走或上楼、寒冷或风中行走、情绪激动可发作心绞痛或仅在睡醒后数小时内发作。在正常情况下以一般速度平地步行200m以上或登一层以上的楼梯受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpextolerance" value="2"/><span> 日常体力活动明显受限，在正常情况下以一般速度平地步行100-200。或登一层楼梯时可发作心绞痛</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="cpextolerance" value="3"/><span> 轻微活动或体息时即可出现心绞痛症状</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">2.胸闷：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <table class="table table-bordered circle">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    频率
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctgrequency" value="0"/><span> 一周内无发作</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctgrequency" value="1"/><span> 每周发作≦6次</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctgrequency" value="2"/><span> 每日发作1-3次</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctgrequency" value="3"/><span> 每日发作4次以上</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    持续时间
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctlasttime" value="0"/><span> 无</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctlasttime" value="1"/><span> ≦5分钟</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctlasttime" value="2"/><span> >5分钟；<10分钟</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctlasttime" value="3"/><span> ≦10分钟</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    程度
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctdegree" value="0"/><span> 无</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctdegree" value="1"/><span> 疼痛不重，有时需舌下含服药物</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctdegree" value="2"/><span> 疼痛较重，一般都需要舌下含服药物</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctdegree" value="3"/><span> 疼痛难忍，需多次舌下含服药物</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    运动耐量
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctextolerance" value="0"/><span> 一般体力活动不引起心绞痛</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctextolerance" value="1"/><span> 日常体力活动稍受限制，快步行走或上楼、登高、饭后行走或上楼、寒冷或风中行走、情绪激动可发作心绞痛或仅在睡醒后数小时内发作。在正常情况下以一般速度平地步行200m以上或登一层以上的楼梯受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctextolerance" value="2"/><span> 日常体力活动明显受限，在正常情况下以一般速度平地步行100-200。或登一层楼梯时可发作心绞痛</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctextolerance" value="3"/><span> 轻微活动或体息时即可出现心绞痛症状</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">3.气短：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <div class="col-md-2">
+                            <input type="radio" name="shortbreath" value="0"/><span> 无</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="shortbreath" value="1"/><span> 一般活动后气短</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="shortbreath" value="2"/><span> 稍微活动后气短</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="shortbreath" value="3"/><span>  平素不活动亦感气短</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">4.心悸：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <div class="col-md-2">
+                            <input type="radio" name="heartpalpitations" value="0"/><span> 无</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="heartpalpitations" value="1"/><span> 偶尔发生，不适感轻微</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="heartpalpitations" value="2"/><span> 时有发生，持续时间较长，不适感较明显</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="heartpalpitations" value="3"/><span> 经常发生，持续不解，惕惕而动，难以平静，甚则影响生活</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">5.肢体沉重：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyheavy" value="0"/><span> 无</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyheavy" value="1"/><span> 稍感沉重，不影响活动</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyheavy" value="2"/><span> 困重较明显，活动减少</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyheavy" value="3"/><span> 困重明显，不欲活动</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">6.口唇紫暗：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <div class="col-md-2">
+                            <input type="radio" name="oralpurple" value="0"/><span> 无</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="oralpurple" value="1"/><span> 有 </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" id="saq">
+            <div class="panel-heading">西雅图心绞痛量表</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">1.过去4周内，由于胸痛、胸部紧榨感和心绞痛所致下列各项受限程度：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <table class="table table-bordered circle">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    自己穿衣
+                                </td>
+                                <td>
+                                    <input type="radio" name="selfdress" value="1"/><span> 重度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="selfdress" value="2"/><span> 中度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="selfdress" value="3"/><span> 轻度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="selfdress" value="4"/><span> 稍受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="selfdress" value="5"/><span> 不受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="selfdress" value="6"/><span> 因其它原因受限</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    室内走路
+                                </td>
+                                <td>
+                                    <input type="radio" name="walkindoor" value="1"/><span> 重度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="walkindoor" value="2"/><span> 中度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="walkindoor" value="3"/><span> 轻度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="walkindoor" value="4"/><span> 稍受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="walkindoor" value="5"/><span> 不受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="walkindoor" value="6"/><span> 因其它原因受限</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    淋浴
+                                </td>
+                                <td>
+                                    <input type="radio" name="shower" value="1"/><span> 重度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shower" value="2"/><span> 中度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shower" value="3"/><span> 轻度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shower" value="4"/><span> 稍受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shower" value="5"/><span> 不受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shower" value="6"/><span> 因其它原因受限</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    爬坡或楼梯(三层，不停)
+                                </td>
+                                <td>
+                                    <input type="radio" name="climbing" value="1"/><span> 重度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="climbing" value="2"/><span> 中度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="climbing" value="3"/><span> 轻度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="climbing" value="4"/><span> 稍受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="climbing" value="5"/><span> 不受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="climbing" value="6"/><span> 因其它原因受限</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    户外活动或提杂物
+                                </td>
+                                <td>
+                                    <input type="radio" name="outdooravtivities" value="1"/><span> 重度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="outdooravtivities" value="2"/><span> 中度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="outdooravtivities" value="3"/><span> 轻度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="outdooravtivities" value="4"/><span> 稍受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="outdooravtivities" value="5"/><span> 不受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="outdooravtivities" value="6"/><span> 因其它原因受限</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    轻快步行一段路 (一公里)
+                                </td>
+                                <td>
+                                    <input type="radio" name="briskwalking" value="1"/><span> 重度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="briskwalking" value="2"/><span> 中度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="briskwalking" value="3"/><span> 轻度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="briskwalking" value="4"/><span> 稍受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="briskwalking" value="5"/><span> 不受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="briskwalking" value="6"/><span> 因其它原因受限</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    慢跑(一公里)
+                                </td>
+                                <td>
+                                    <input type="radio" name="jogging" value="1"/><span> 重度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="jogging" value="2"/><span> 中度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="jogging" value="3"/><span> 轻度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="jogging" value="4"/><span> 稍受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="jogging" value="5"/><span> 不受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="jogging" value="6"/><span> 因其它原因受限</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                     提起或移动重物 
+                                </td>
+                                <td>
+                                    <input type="radio" name="liftheavy" value="1"/><span> 重度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="liftheavy" value="2"/><span> 中度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="liftheavy" value="3"/><span> 轻度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="liftheavy" value="4"/><span> 稍受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="liftheavy" value="5"/><span> 不受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="liftheavy" value="6"/><span> 因其它原因受限</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    剧烈运动(如游泳或打球) 
+                                </td>
+                                <td>
+                                    <input type="radio" name="stenuousexercise" value="1"/><span> 重度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="stenuousexercise" value="2"/><span> 中度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="stenuousexercise" value="3"/><span> 轻度受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="stenuousexercise" value="4"/><span> 稍受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="stenuousexercise" value="5"/><span> 不受限</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="stenuousexercise" value="6"/><span> 因其它原因受限</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">2.与4周前比较，作最大强度的活动时，胸痛、胸部紧榨感和心绞痛的发作情况：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <div class="col-md-2">
+                            <input type="radio" name="onset" value="1"/><span> 明显增加</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="onset" value="2"/><span> 轻微增加</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="onset" value="3"/><span> 相同</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="onset" value="4"/><span>  轻微减少</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="onset" value="5"/><span>  明显减少</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">3.过去4周内，胸痛、胸部紧榨感和心绞痛的平均发作次数：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <div class="col-md-2">
+                            <input type="radio" name="averageattacktimes" value="1"/><span> ≥4次/天</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="averageattacktimes" value="2"/><span> 1～3次/天</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="averageattacktimes" value="3"/><span>  ≥3次/周</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="averageattacktimes" value="4"/><span> 1～2次/周</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="averageattacktimes" value="5"/><span>  <1次/周</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="averageattacktimes" value="6"/><span> 无发作</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">4.过去4周内，胸痛、胸部紧榨感和心绞痛服用硝基药物(如硝酸甘油)平均次数：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <div class="col-md-2">
+                            <input type="radio" name="averagedrugstimes" value="1"/><span> ≥4次/天</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="averagedrugstimes" value="2"/><span> 1～3次/天</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="averagedrugstimes" value="3"/><span>  ≥3次/周</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="averagedrugstimes" value="4"/><span> 1～2次/周</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="averagedrugstimes" value="5"/><span>  <1次/周</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="averagedrugstimes" value="6"/><span> 没使用 </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">5.因胸痛、胸部紧榨感和心绞痛遵守医嘱服药带来的烦恼： </div>
+                    <div class="mycol-md mycol-offset-md">
+                         <div class="col-md-2">
+                            <input type="radio" name="trouble" value="1"/><span> 严重</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="trouble" value="2"/><span> 中度</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="trouble" value="3"/><span> 轻微</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="trouble" value="4"/><span> 极少</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="trouble" value="5"/><span> 无</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="trouble" value="6"/><span> 医生未给药</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">6.对治疗胸痛、胸部紧榨感和心绞痛的各种措施的满意程度： </div>
+                    <div class="mycol-md mycol-offset-md">
+                         <div class="col-md-2">
+                            <input type="radio" name="measuressatisfaction" value="1"/><span> 不满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="measuressatisfaction" value="2"/><span> 大部分不满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="measuressatisfaction" value="3"/><span> 部分满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="measuressatisfaction" value="4"/><span> 大部分满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="measuressatisfaction" value="5"/><span> 高度满意</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">7.对医生就胸痛、胸部紧榨感和心绞痛的解释满意程度：  </div>
+                    <div class="mycol-md mycol-offset-md">
+                         <div class="col-md-2">
+                            <input type="radio" name="explainsatisfaction" value="1"/><span> 不满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="explainsatisfaction" value="2"/><span> 大部分不满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="explainsatisfaction" value="3"/><span> 部分满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="explainsatisfaction" value="4"/><span> 大部分满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="explainsatisfaction" value="5"/><span> 高度满意</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">8.总的来说，对目前胸痛、胸部紧榨感和心绞痛的治疗满意程度：  </div>
+                    <div class="mycol-md mycol-offset-md">
+                         <div class="col-md-2">
+                            <input type="radio" name="treatmentsatisfaction" value="1"/><span> 不满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="treatmentsatisfaction" value="2"/><span> 大部分不满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="treatmentsatisfaction" value="3"/><span> 部分满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="treatmentsatisfaction" value="4"/><span> 大部分满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="treatmentsatisfaction" value="5"/><span> 高度满意</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">9.过去4周内，胸痛、胸部紧榨感和心绞痛影响生活乐趣的程度：</div>
+                    <div class="mycol-md mycol-offset-md">
+                         <div class="col-md-2">
+                            <input type="radio" name="saqinfluencedegree" value="1"/><span> 不满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="saqinfluencedegree" value="2"/><span> 大部分不满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="saqinfluencedegree" value="3"/><span> 部分满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="saqinfluencedegree" value="4"/><span> 大部分满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="saqinfluencedegree" value="5"/><span> 高度满意</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">10.在您的未来生活中如果还有胸痛、胸部紧榨感和心绞痛，您会感觉怎样：</div>
+                    <div class="mycol-md mycol-offset-md">
+                         <div class="col-md-2">
+                            <input type="radio" name="feel" value="1"/><span> 不满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="feel" value="2"/><span> 大部分不满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="feel" value="3"/><span> 部分满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="feel" value="4"/><span> 大部分满意</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="feel" value="5"/><span> 高度满意</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">11.对心脏病发作和突然死亡的担心程度：</div>
+                    <div class="mycol-md mycol-offset-md">
+                          <div class="col-md-2">
+                            <input type="radio" name="feardeath" value="1"/><span> 一直担心</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="feardeath" value="2"/><span> 经常担心</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="feardeath" value="3"/><span> 有时担心</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="feardeath" value="4"/><span> 很少担心</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="feardeath" value="5"/><span> 绝不担心</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default" id="sf36">
+            <div class="panel-heading">SF-36量表</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">1、总体来讲，您的健康状况是：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <div class="col-md-2">
+                            <input type="radio" name="healthstate" value="1"/><span> 非常好</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="healthstate" value="2"/><span> 很好</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="healthstate" value="3"/><span> 好</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="healthstate" value="4"/><span> 一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="healthstate" value="5"/><span> 差</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">2、跟1年以前比您觉得自己的健康状况是：</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <div class="col-md-2">
+                            <input type="radio" name="comparehealth" value="1"/><span>比1年前好多了</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="comparehealth" value="2"/><span> 比1年前好一些</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="comparehealth" value="3"/><span> 跟1年前差不多</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="comparehealth" value="4"/><span>比1年前差一些</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="comparehealth" value="5"/><span>比1年前差多了</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">3、以下这些问题都和日常活动有关。请您想一想，您的健康状况是否限制了这些活动？如果有限制，程度如何？</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <table class="table table-bordered circle">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    重体力活动。如跑步举重、参加剧烈运动等：
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitheavy" value="1"/><span> 限制很大</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitheavy" value="2"/><span> 有些限制</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitheavy" value="3"/><span> 毫无限制</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    适度的活动。如移动一张桌子、扫地、打太极拳、做简单体操等：
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitmoderate" value="1"/><span> 限制很大</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitmoderate" value="2"/><span> 有些限制</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitmoderate" value="3"/><span> 毫无限制</span>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td>
+                                    手提日用品。如买菜、购物等：
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitdailyproduct" value="1"/><span> 限制很大</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitdailyproduct" value="2"/><span> 有些限制</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitdailyproduct" value="3"/><span> 毫无限制</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    上几层楼梯：
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitseveralfloors" value="1"/><span> 限制很大</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitseveralfloors" value="2"/><span> 有些限制</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitseveralfloors" value="3"/><span> 毫无限制</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    上一层楼梯：
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitonefloor" value="1"/><span> 限制很大</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitonefloor" value="2"/><span> 有些限制</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitonefloor" value="3"/><span> 毫无限制</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    弯腰、屈膝、下蹲：
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitbend" value="1"/><span> 限制很大</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitbend" value="2"/><span> 有些限制</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitbend" value="3"/><span> 毫无限制</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    步行1500米以上的路程：
+                                </td>
+                                <td>
+                                    <input type="radio" name="limit1500" value="1"/><span> 限制很大</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limit1500" value="2"/><span> 有些限制</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limit1500" value="3"/><span> 毫无限制</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    步行1000米的路程：
+                                </td>
+                                <td>
+                                    <input type="radio" name="limit1000" value="1"/><span> 限制很大</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limit1000" value="2"/><span> 有些限制</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limit1000" value="3"/><span> 毫无限制</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    步行100米的路程：
+                                </td>
+                                <td>
+                                    <input type="radio" name="limit100" value="1"/><span> 限制很大</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limit100" value="2"/><span> 有些限制</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limit100" value="3"/><span> 毫无限制</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    自己洗澡、穿衣：
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitshower" value="1"/><span> 限制很大</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitshower" value="2"/><span> 有些限制</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="limitshower" value="3"/><span> 毫无限制</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">4、在过去4个星期里，您的工作和日常活动有无因为身体健康的原因而出现以下这些问题？</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <table class="table table-bordered circle">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    减少了工作或其他活动时间：
+                                </td>
+                                <td>
+                                    <input type="radio" name="healthreducetime" value="1"/><span>是</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="healthreducetime" value="2"/><span> 不是</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    本来想要做的事情只能完成一部分：
+                                </td>
+                                <td>
+                                    <input type="radio" name="healthcompletepart" value="1"/><span>是</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="healthcompletepart" value="2"/><span> 不是</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    想要干的工作或活动种类受到限制：
+                                </td>
+                                <td>
+                                    <input type="radio" name="healthlimitwork" value="1"/><span>是</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="healthlimitwork" value="2"/><span> 不是</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    完成工作或其他活动困难增多（比如需要额外的努力）：
+                                </td>
+                                <td>
+                                    <input type="radio" name="healthmoredifficulty" value="1"/><span>是</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="healthmoredifficulty" value="2"/><span> 不是</span>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">5、在过去4个星期里，您的工作和日常活动有无因为情绪的原因（如压抑或忧虑）而出现以下这些问题？</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <table class="table table-bordered circle">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    减少了工作或其他活动时间：
+                                </td>
+                                <td>
+                                    <input type="radio" name="moodreducetime" value="1"/><span>是</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="moodreducetime" value="2"/><span> 不是</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    本来想要做的事情只能完成一部分：
+                                </td>
+                                <td>
+                                    <input type="radio" name="moodcompletepart" value="1"/><span>是</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="moodcompletepart" value="2"/><span> 不是</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    干事情不如平时仔细：
+                                </td>
+                                <td>
+                                    <input type="radio" name="moodnotcareful" value="1"/><span>是</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="moodnotcareful" value="2"/><span> 不是</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">6、在过去4个星期里，您的健康或情绪不好在多大程度上影响了您与家人、朋友、邻居或集体的正常社会交往？</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <div class="col-md-2">
+                            <input type="radio" name="sf36influencedegree" value="1"/><span> 完全没有影响</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="sf36influencedegree" value="2"/><span> 有一点影响</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="sf36influencedegree" value="3"/><span> 中等影响</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="sf36influencedegree" value="4"/><span> 影响很大</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="sf36influencedegree" value="5"/><span> 影响非常大</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">7、在过去4个星期里，您有身体疼痛吗？ </div>
+                    <div class="mycol-md mycol-offset-md">
+                         <div class="col-md-2">
+                            <input type="radio" name="physicalpain" value="1"/><span> 完全没有疼痛</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="physicalpain" value="2"/><span> 有一点疼痛</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="physicalpain" value="3"/><span> 中等疼痛</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="physicalpain" value="4"/><span> 严重疼痛</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="physicalpain" value="5"/><span> 很严重疼痛</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">8、在过去4个星期里，您的身体疼痛影响了您的工作和家务吗？</div>
+                    <div class="mycol-md mycol-offset-md">
+                         <div class="col-md-2">
+                            <input type="radio" name="influencework" value="1"/><span> 完全没有影响</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="influencework" value="2"/><span> 有一点影响</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="influencework" value="3"/><span> 中等影响</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="influencework" value="4"/><span> 影响很大</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="influencework" value="5"/><span> 影响非常大</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">9、以下这些问题是关于过去1个月里您自己的感觉，对每一条问题所说的事情，您的情况是什么样的？</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <table class="table table-bordered circle">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    您觉得生活充实：
+                                </td>
+                                <td>
+                                    <input type="radio" name="enrichment" value="1"/><span>所有的时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="enrichment" value="2"/><span> 大部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="enrichment" value="3"/><span> 比较多时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="enrichment" value="4"/><span> 一部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="enrichment" value="5"/><span> 小部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="enrichment" value="6"/><span> 没有这种感觉</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    您是一个敏感的人：
+                                </td>
+                                <td>
+                                    <input type="radio" name="sensitive" value="1"/><span>所有的时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="sensitive" value="2"/><span> 大部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="sensitive" value="3"/><span> 比较多时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="sensitive" value="4"/><span> 一部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="sensitive" value="5"/><span> 小部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="sensitive" value="6"/><span> 没有这种感觉</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   您的情绪非常不好，什么事都不能使您高兴起来：
+                                </td>
+                                <td>
+                                    <input type="radio" name="badmood" value="1"/><span>所有的时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="badmood" value="2"/><span> 大部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="badmood" value="3"/><span> 比较多时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="badmood" value="4"/><span> 一部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="badmood" value="5"/><span> 小部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="badmood" value="6"/><span> 没有这种感觉</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    您的心理很平静：
+                                </td>
+                                <td>
+                                    <input type="radio" name="calmmood" value="1"/><span>所有的时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="calmmood" value="2"/><span> 大部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="calmmood" value="3"/><span> 比较多时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="calmmood" value="4"/><span> 一部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="calmmood" value="5"/><span> 小部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="calmmood" value="6"/><span> 没有这种感觉</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    您做事精力充沛：
+                                </td>
+                                <td>
+                                    <input type="radio" name="fullenergy" value="1"/><span>所有的时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="fullenergy" value="2"/><span> 大部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="fullenergy" value="3"/><span> 比较多时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="fullenergy" value="4"/><span> 一部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="fullenergy" value="5"/><span> 小部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="fullenergy" value="6"/><span> 没有这种感觉</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    您的情绪低落：
+                                </td>
+                                <td>
+                                    <input type="radio" name="lowmood" value="1"/><span>所有的时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="lowmood" value="2"/><span> 大部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="lowmood" value="3"/><span> 比较多时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="lowmood" value="4"/><span> 一部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="lowmood" value="5"/><span> 小部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="lowmood" value="6"/><span> 没有这种感觉</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    您觉得筋疲力尽：
+                                </td>
+                                <td>
+                                    <input type="radio" name="exhausted" value="1"/><span>所有的时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="exhausted" value="2"/><span> 大部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="exhausted" value="3"/><span> 比较多时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="exhausted" value="4"/><span> 一部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="exhausted" value="5"/><span> 小部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="exhausted" value="6"/><span> 没有这种感觉</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    您是个快乐的人：
+                                </td>
+                                <td>
+                                    <input type="radio" name="happy" value="1"/><span>所有的时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="happy" value="2"/><span> 大部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="happy" value="3"/><span> 比较多时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="happy" value="4"/><span> 一部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="happy" value="5"/><span> 小部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="happy" value="6"/><span> 没有这种感觉</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    您感觉厌烦：
+                                </td>
+                                <td>
+                                    <input type="radio" name="tired" value="1"/><span>所有的时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="tired" value="2"/><span> 大部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="tired" value="3"/><span> 比较多时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="tired" value="4"/><span> 一部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="tired" value="5"/><span> 小部分时间</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ctgrequency" value="6"/><span> 没有这种感觉</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">10、不健康影响了您的社会活动（如走亲访友）：</div>
+                    <div class="mycol-md mycol-offset-md">
+                         <div class="col-md-2">
+                            <input type="radio" name="influenceactivity" value="1"/><span> 所有的时间</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="influenceactivity" value="2"/><span> 大部分时间</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="influenceactivity" value="3"/><span> 比较多时间</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="influenceactivity" value="4"/><span> 一部分时间</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="influenceactivity" value="5"/><span> 小部分时间</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="influenceactivity" value="5"/><span> 没有这种感觉</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">11、请看下列每一条问题，哪一种答案最符合您的情况？</div>
+                    <div class="mycol-md mycol-offset-md">
+                        <table class="table table-bordered circle">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    我好象比别人容易生病：
+                                </td>
+                                <td>
+                                    <input type="radio" name="easysick" value="1"/><span> 绝对正确 </span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="easysick" value="2"/><span> 大部分正确 </span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="easysick" value="3"/><span> 不能肯定</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="easysick" value="4"/><span> 大部分错误</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="easysick" value="5"/><span> 绝对错误</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    我跟周围人一样健康：
+                                </td>
+                                <td>
+                                    <input type="radio" name="ashealthy" value="1"/><span> 绝对正确 </span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ashealthy" value="2"/><span> 大部分正确 </span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ashealthy" value="3"/><span> 不能肯定</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ashealthy" value="4"/><span> 大部分错误</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="ashealthy" value="5"/><span> 绝对错误</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    我认为我的健康状况在变坏：
+                                </td>
+                                <td>
+                                    <input type="radio" name="badhealth" value="1"/><span> 绝对正确 </span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="badhealth" value="2"/><span> 大部分正确 </span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="badhealth" value="3"/><span> 不能肯定</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="badhealth" value="4"/><span> 大部分错误</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="badhealth" value="5"/><span> 绝对错误</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    我的健康状况非常好：
+                                </td>
+                                <td>
+                                    <input type="radio" name="nicehealth" value="1"/><span> 绝对正确 </span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="nicehealth" value="2"/><span> 大部分正确 </span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="nicehealth" value="3"/><span> 不能肯定</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="nicehealth" value="4"/><span> 大部分错误</span>
+                                </td>
+                                <td>
+                                    <input type="radio" name="nicehealth" value="5"/><span> 绝对错误</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+         生化指标结果
+        <hr>
+        <table class="table table-bordered" id="lipiddata">
+            <caption>1、脂质代谢指标</caption>
+            <tbody>
+            <tr style="font-weight: bold">
+                <td>指标编号</td>
+                <td>总胆固醇</td>
+                <td>甘油三酯</td>
+                <td>HDL-C</td>
+                <td>LDL-C</td>
+                <td>Apo AI</td>
+                <td>Apo B</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>1号</div>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="totalcholesterol">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="triglycerides">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="hdlc">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="ldlc">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="apoai">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="apob">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered" id="inflammation">
+            <caption>2、炎症介质指标</caption>
+            <tbody>
+            <tr style="font-weight: bold">
+                <td>指标编号</td>
+                <td>NF-κB</td>
+                <td>TNF-α</td>
+                <td>IL-1</td>
+                <td>IL-6</td>
+                <td>MCP-1</td>
+                <td>sCD40L</td>
+                <td>GM-CSF</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>1号</div>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="nfkb">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="tnfa">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="il1">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="il6">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="mcp1">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="scd40l">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="gmcsf">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered" id="celldamage">
+            <caption>3、内皮细胞损伤指标</caption>
+            <tbody>
+            <tr style="font-weight: bold">
+                <td>指标编号</td>
+                <td>ET-1</td>
+                <td>血管紧张素</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>1号</div>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="et1">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="angiotensin">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered" id="bloodfunction">
+            <caption>4、凝血功能指标</caption>
+            <tbody>
+            <tr style="font-weight: bold">
+                <td>指标编号</td>
+                <td>凝血酶原时间</td>
+                <td>活动度和比率</td>
+                <td>凝血酶时间</td>
+                <td>活化部分凝血活酶时间</td>
+                <td>纤维蛋白原浓度</td>
+                <td>反应时间</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>1号</div>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="pt">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="actandrat">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="tt">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="aptt">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="fibrinogenlevels">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="reactiontime">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+         SNP基因分型芯片结果
+        <hr>
+        <table class="table table-bordered" id="snp">
+            <tbody>
+            <tr style="font-weight: bold">
+                <td>指标编号</td>
+                <td>位点1</td>
+                <td>位点2</td>
+                <td>位点3</td>
+                <td>位点4</td>
+                <td>位点5</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>1号</div>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="site1">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="site2">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="site3">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="site4">
+                </td>
+                 <td>
+                    <input type="text" class="form-control" name="site5">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+         代谢组学检测结果数据库
+        <hr>
+        <table class="table table-bordered" id="metabolism">
+            <tbody>
+            <tr style="font-weight: bold">
+                <td>指标编号</td>
+                <td>代谢产物1</td>
+                <td>代谢产物2</td>
+                <td>代谢产物3</td>
+                <td>代谢产物4</td>
+                <td>代谢产物5</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>1号</div>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="metabolites1">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="metabolites2">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="metabolites3">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="metabolites4">
+                </td>
+                 <td>
+                    <input type="text" class="form-control" name="metabolites5">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        基因组学检测结果数据库
+        <hr>
+        <table class="table table-bordered" id="gene">
+            <tbody>
+            <tr style="font-weight: bold">
+                <td>指标编号</td>
+                <td>基因1</td>
+                <td>基因2</td>
+                <td>基因3</td>
+                <td>基因4</td>
+                <td>基因5</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>1号</div>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="gene1">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="gene2">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="gene3">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="gene4">
+                </td>
+                 <td>
+                    <input type="text" class="form-control" name="gene5">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <button class="btn btn-default" id="save-clin">保存</button>
+    </div>
+</div>

@@ -1,0 +1,1207 @@
+<!--<script src="../template/modules/delphi/delphi.js"></script>
+
+<style>
+    .panel .col-md-2, .panel .col-md-3, .panel .col-md-1 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .supply {
+        width: 80%;
+    }
+    #radioques.row{
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #radiopanel .panel-body {
+        padding: 30px;
+    }
+
+    #checkboxpanel td {
+        padding-left: 15px;
+    }
+     #checkboxpanel td {
+        padding-left: 15px;
+    }
+
+    .hide {
+        display: none;
+    }
+    #totop{
+
+    }
+    #totop div{
+        height: 50px;
+        width: 50px;
+        padding-left: 15px;
+        padding-top: 14px;
+        background-color: #1d7db1;
+        opacity: 0.8;
+        border-radius: 25px;
+        position: fixed;
+        margin-left: 1200px;
+        margin-top: 650px;
+        z-index: 1000;
+    }
+    #totop div span{
+        color: #ffffff;
+        font-size: 20px;
+    }
+    #addques{
+        float: left;
+        margin-bottom: 10px;
+    }
+    .btn-date{
+        float: right;
+        width: 200px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+
+    }
+    .div-date{
+        float: right;
+        padding-top: 8px;
+        margin-bottom: 10px;
+
+    }
+</style>
+
+<div id="nav-head" style="margin-top: -50px;position: absolute"></div>&lt;!&ndash;回到顶部定位点&ndash;&gt;
+<h2 class="sub-header">德尔菲数据库</h2>
+
+&lt;!&ndash;回到顶部图标&ndash;&gt;
+<a id='totop'>
+    <div>
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+</a>
+
+&lt;!&ndash;table表格&ndash;&gt;
+<div class="row" id="delphi2">
+    <div class="col-md-12" >
+        <button type="button" class="btn btn-default" id="addques">
+            <a style="text-decoration: none"><i class="glyphicon glyphicon-plus"></i>创建新问卷</a>
+        </button>
+        <div class="input-group date form_date btn-date" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+            <input id="foot-date" class="form-control" type="text" onchange="dateChange()" readonly >
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+        <div class="input-group date form_date btn-date" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+            <input id="head-date" class="form-control" type="text" onchange="dateChange()" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+        <div class="input-group div-date"> 日期选择：</div>
+        <table id="delphiTable"></table>
+    </div>
+</div>
+
+<div id="nav-middle" style="margin-top: -60px;position: absolute"></div>&lt;!&ndash;问卷开始定位点&ndash;&gt;
+
+&lt;!&ndash;冠心病痰瘀互结证德尔菲法专家咨询问卷&ndash;&gt;
+<div class="row hide" id="questionare">
+    <div class="col-md-8 col-md-offset-2">
+        <div id='radiopanel' class="panel panel-default">
+            <div class="panel-heading">冠心病痰瘀互结证德尔菲法专家咨询问卷</div>
+            <div class="panel-body">
+
+                <div class="row" id="radioques">
+                    <div class="row">
+                        <div class="col-md-3">
+                            1、胸闷、胸痛
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="chest" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="chest" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="chest" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="chest" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            2、体胖
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyfat" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyfat" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyfat" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyfat" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            3、肢体困重
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyheavy" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyheavy" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyheavy" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="bodyheavy" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            4、口黏（粘)
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="mouthstick" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="mouthstick" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="mouthstick" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="mouthstick" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            5、唇青紫
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="lips" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="lips" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="lips" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="lips" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            6、面色晦暗
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="facedark" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="facedark" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="facedark" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="facedark" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            7、舌质暗(黯) 紫
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguepurple" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguepurple" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguepurple" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguepurple" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            8、舌有瘀斑、斑点
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguespots" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguespots" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguespots" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguespots" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            9、舌下脉络青紫
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguevein" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguevein" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguevein" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="tonguevein" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            10、苔腻
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="mossgreasy" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="mossgreasy" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="mossgreasy" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="mossgreasy" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            11、脉弦滑
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="slipperypluse" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="slipperypluse" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="slipperypluse" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="slipperypluse" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            12、脉弦涩
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="astringentpulse" value="1"/><span>很重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="astringentpulse" value="2"/><span>比较重要</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="astringentpulse" value="3"/><span>一般</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="astringentpulse" value="4"/><span>不大重要</span>
+                        </div>
+                    </div>
+                </div>
+
+                &lt;!&ndash;添加按钮&ndash;&gt;
+                <button class="btn btn-default" id="btnAdd">&nbsp;&nbsp;补充&nbsp;&nbsp;</button>
+
+            </div>
+        </div>
+        <div class="panel panel-default" id="checkboxques">
+            <div class="panel-heading">冠心病痰瘀互结证临床辨证诊断方式（请选择）</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default checkboxpanel">
+                            <div class="panel-heading">
+                                1、<input type="checkbox" name="choice1" value="">
+                            </div>
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr>
+                                    <td>主症</td>
+                                    <td>:&nbsp;&nbsp;胸闷胸痛, 口黏有痰, 纳呆脘胀</td>
+                                </tr>
+                                <tr>
+                                    <td>兼症</td>
+                                    <td>:&nbsp;&nbsp;头重身困, 恶心呕吐, 心悸心慌, 痰多体胖</td>
+                                </tr>
+                                <tr>
+                                    <td>舌象</td>
+                                    <td>:&nbsp;&nbsp;舌质紫暗或见紫斑或舌下脉络紫胀, 苔腻</td>
+                                </tr>
+                                <tr>
+                                    <td>脉象</td>
+                                    <td>:&nbsp;&nbsp;脉滑或数</td>
+                                </tr>
+                                <tr>
+                                    <td>辨证习惯</td>
+                                    <td>:&nbsp;&nbsp;但见苔腻、质暗便是，他证不必悉具</td>
+                                </tr>
+                                <tr>
+                                    <td>请评述</td>
+                                    &lt;!&ndash;<td>:&nbsp;&nbsp;<input type="text" name="review1" value=""></td>&ndash;&gt;
+                                    <td>:&nbsp;&nbsp;<textarea name="review1" value=""></textarea></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default checkboxpanel">
+                            <div class="panel-heading">
+                                2、<input type="checkbox" name="choice2" value="">
+                            </div>
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr>
+                                    <td>痰浊必备证2项</td>
+                                    <td>:&nbsp;&nbsp;胸脘痞满、苔腻或浊</td>
+                                </tr>
+                                <tr>
+                                    <td>血瘀必备证2项</td>
+                                    <td>:&nbsp;&nbsp;胸部疼痛、舌质紫黯或瘀斑</td>
+                                </tr>
+                                <tr>
+                                    <td>辨证习惯</td>
+                                    <td>:&nbsp;&nbsp;可定为痰瘀型</td>
+                                </tr>
+                                <tr>
+                                    <td>请评述</td>
+                                    &lt;!&ndash;<td>:&nbsp;&nbsp;<input type="text" name="review2" value=""></td>&ndash;&gt;
+                                    <td>:&nbsp;&nbsp;<textarea name="review2" value=""></textarea></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default checkboxpanel">
+                            <div class="panel-heading">
+                                3、<input type="checkbox" name="choice3" value="">
+                            </div>
+                            <table class="table table-striped ">
+                                <tbody>
+                                <tr>
+                                    <td>主症</td>
+                                    <td>:&nbsp;&nbsp;胸闷或胸痛</td>
+                                </tr>
+                                <tr>
+                                    <td>次症</td>
+                                    <td>:&nbsp;&nbsp;①脘痞（或食少纳呆），肢体沉重，形体肥胖 <br>:&nbsp;&nbsp;②口唇紫暗（或有瘀斑、瘀点），舌质紫暗（或有瘀斑、斑点<br>:&nbsp;&nbsp;&nbsp;或舌下脉络迂曲青紫)</td>
+                                </tr>
+                                <tr>
+                                    <td>舌象</td>
+                                    <td>:&nbsp;&nbsp;舌体胖大，边有齿痕，苔白腻或厚腻</td>
+                                </tr>
+                                <tr>
+                                    <td>脉象</td>
+                                    <td>:&nbsp;&nbsp;脉弦涩、沉涩或弦滑</td>
+                                </tr>
+                                <tr>
+                                    <td>辨证习惯</td>
+                                    <td>:&nbsp;&nbsp;具备主症，次证①中2个症状和②中1个症状，结合舌脉，即可诊断</td>
+                                </tr>
+                                <tr>
+                                    <td>请评述</td>
+                                    &lt;!&ndash;<td>:&nbsp;&nbsp;<input type="text" name="review3" value=""></td>&ndash;&gt;
+                                    <td>:&nbsp;&nbsp;<textarea name="review3" value=""></textarea></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default checkboxpanel">
+                            <div class="panel-heading">
+                                4、<input type="checkbox" name="choice4" value="">
+                            </div>
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr>
+                                    <td>主症</td>
+                                    <td>:&nbsp;&nbsp;滑脉、胸刺痛、头重如裹、舌苔腻、头晕昏沉、舌下络脉迂曲、<br>:&nbsp;&nbsp;失眠、腰膝酸软、舌色红、口臭、耳鸣如蝉、舌色淡红</td>
+                                </tr>
+                                <tr>
+                                    <td>辨证习惯</td>
+                                    <td>:&nbsp;&nbsp;基于多元统计分析的诊断探索模型结果（强度从高到低排序）</td>
+                                </tr>
+                                <tr>
+                                    <td>请评述</td>
+                                    &lt;!&ndash;<td>:&nbsp;&nbsp;<input type="text" name="review4" value=""></td>&ndash;&gt;
+                                    <td>:&nbsp;&nbsp;<textarea name="review4" value=""></textarea></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default checkboxpanel">
+                            <div class="panel-heading">
+                                请您填写自己的辨证习惯
+                            </div>
+                            <table class="table table-striped mycheck">
+                                <tbody>
+                                <tr>
+                                     &lt;!&ndash;<td><input type="text" name="habits" value=""></td>&ndash;&gt;
+                                     <td><textarea name="habits" value=""></textarea></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <input class="btn btn-default" id="save-ques" value=""/>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+<link rel="stylesheet" href="../template/styles/css/bootstrap-datetimepicker.min.css">
+<script src="../template/modules/delphi/test.js"></script>
+
+<style>
+    .hide {
+        display: none;
+    }
+
+
+    #totop div {
+        height: 50px;
+        width: 50px;
+        padding-left: 15px;
+        padding-top: 14px;
+        background-color: #1d7db1;
+        opacity: 0.8;
+        border-radius: 25px;
+        position: fixed;
+        margin-left: 1200px;
+        margin-top: 650px;
+        z-index: 1000;
+    }
+
+    #totop div span {
+        color: #ffffff;
+        font-size: 20px;
+    }
+
+    #addques {
+        float: left;
+        margin-bottom: 10px;
+    }
+
+    .btn-date {
+        float: right;
+        width: 200px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+
+    }
+
+    .div-date {
+        float: right;
+        padding-top: 8px;
+        margin-bottom: 10px;
+
+    }
+    /*从这儿开始是这个的style*/
+    .mycol-md-3{
+        float: left;
+        width: 25%;
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-bottom: 15px;
+    }
+    .mycol-md-2{
+        float: left;
+        width: 13%;
+        padding-bottom: 15px;
+
+    }
+    .mycol-md-1{
+        float: left;
+        width: 10%;
+    }
+
+    textarea.form-control {
+        height: 34px;
+        max-width: 150px;
+        max-height: 100px;
+    }
+
+</style>
+
+
+<div id="nav-head" style="margin-top: -50px;position: absolute"></div><!--回到顶部定位点-->
+<h2 class="sub-header">德尔菲数据库</h2>
+
+<!--回到顶部图标-->
+<a id='totop'>
+    <div>
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+</a>
+
+<!--table表格-->
+<div class="row" id="delphiFour">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-default" id="addques">
+            <a style="text-decoration: none"><i class="glyphicon glyphicon-plus"></i>创建新问卷</a>
+        </button>
+        <div class="input-group date form_date btn-date" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+            <input id="foot-date" class="form-control" type="text" onchange="dateChange()" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+        <div class="input-group date form_date btn-date" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+            <input id="head-date" class="form-control" type="text" onchange="dateChange()" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+        <div class="input-group div-date"> 日期选择：</div>
+        <table id="delphiFourTable" data-toolbar=""></table>
+    </div>
+</div>
+
+<div id="nav-middle" style="margin-top: -50px;position: absolute"></div><!--问卷开始定位点-->
+
+<!--问卷-->
+<div class="row hide" id="questionare" style="margin-top: 20px">
+    <div class="col-md-12">
+        专家信息
+        <hr>
+        <table class="table table-bordered" id="expertdata">
+            <tbody>
+            <tr style="font-weight: bold">
+                <th style="width:10%">姓名</th>
+                <th style="width:10%">性别</th>
+                <th style="width:10%">年龄</th>
+                <th style="width:10%">职称</th>
+                <th style="width:13%">工作单位</th>
+                <th style="width:13%">专业或研究方向</th>
+                <th style="width:12%">联系电话</th>
+                <th style="width:12%">email</th>
+                <th style="width:10%">在标准发布时<br>是否同意署名</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" name="expertname" id="expertname" placeholder="按Enter键">
+                </td>
+                <td>
+                    <select class="form-control" name="expertgender">
+                        <option value ="男">男</option>
+                        <option value ="女">女</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="expertage" onblur="ageJudge(this)">
+                </td>
+                <td>
+                    <select class="form-control" name="professionaltitle">
+                        <option value ="正高级">正高级</option>
+                        <option value ="副高级">副高级</option>
+                        <option value ="中级">中级</option>
+                        <option value ="初级">初级</option>
+                        <option value ="其它">其它</option>
+                    </select>
+                <td>
+                    <textarea class="form-control" name="workunits"></textarea>
+                </td>
+                <td>
+                    <textarea class="form-control" name="researchdirection"></textarea>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="phonenumber" onblur="phoneJudge(this)">
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="expertemail" onblur="emailJudge(this)">
+                </td>
+                <td>
+                     <select class="form-control" name="signature">
+                        <option value ="同意">同意</option>
+                        <option value ="不同意">不同意</option>
+                    </select>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        德尔菲法专家咨询问卷
+        <hr>
+        <div class="panel panel-default" id="wind">
+            <div class="panel-heading"> 冠心病痰瘀互结阻络德尔菲法专家咨询问卷</div>
+            <div class="panel-body">
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        1、胸痛反复发作，日久不愈
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="chestpain" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="chestpain" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="chestpain" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="chestpain" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="chestpain" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        2、胸闷
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="chesttight" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="chesttight" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="chesttight" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="chesttight" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="chesttight" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        3、心悸
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="heartpal" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="heartpal" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="heartpal" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="heartpal" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="heartpal" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        4、肢体麻木
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="numbness" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="numbness" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="numbness" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="numbness" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="numbness" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        5、烦躁
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="agitated" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="agitated" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="agitated" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="agitated" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="agitated" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        6、脉弦
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulsestring" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulsestring" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulsestring" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulsestring" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulsestring" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        7、脉涩
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulseacerbity" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulseacerbity" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulseacerbity" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulseacerbity" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulseacerbity" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <button class="btn btn-default" name="additem">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
+            </div>
+        </div>
+        <div class="panel panel-default" id="fire">
+            <div class="panel-heading"> 冠心病痰瘀互结化火德尔菲法专家咨询问卷</div>
+            <div class="panel-body">
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        1、心痛如灼
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="heartpain" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="heartpain" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="heartpain" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="heartpain" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="heartpain" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        2、咽干
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="drythroat" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="drythroat" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="drythroat" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="drythroat" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="drythroat" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        3、口苦
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="mouthbitter" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="mouthbitter" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="mouthbitter" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="mouthbitter" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="mouthbitter" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        4、烦躁
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="fireagitated" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="fireagitated" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="fireagitated" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="fireagitated" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="fireagitated" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        5、溲黄
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="souyellow" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="souyellow" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="souyellow" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="souyellow" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="souyellow" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        6、便秘
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="constipation" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="constipation" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="constipation" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="constipation" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="constipation" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        7、舌红
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="redtongue" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="redtongue" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="redtongue" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="redtongue" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="redtongue" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        8、苔黄
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="mossyellow" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="mossyellow" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="mossyellow" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="mossyellow" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="mossyellow" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        9、脉数
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulsenumber" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulsenumber" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulsenumber" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulsenumber" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="pulsenumber" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <button class="btn btn-default" name="additem">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
+
+            </div>
+        </div>
+        <div class="panel panel-default" id="poison">
+            <div class="panel-heading"> 冠心病痰瘀互结生毒德尔菲法专家咨询问卷</div>
+            <div class="panel-body">
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        1、中、重度心绞痛
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="severheartpain" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="severheartpain" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="severheartpain" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="severheartpain" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="severheartpain" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        2、重度口苦
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="severmouthbitter" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="severmouthbitter" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="severmouthbitter" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="severmouthbitter" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="severmouthbitter" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        3、咽痛甚
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="sorethroat" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="sorethroat" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="sorethroat" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="sorethroat" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="sorethroat" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        4、口疮
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="cankersores" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="cankersores" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="cankersores" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="cankersores" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="cankersores" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        5、病情凶险
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="dangerousillness" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="dangerousillness" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="dangerousillness" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="dangerousillness" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="dangerousillness" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        6、老舌
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="oldtongue" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="oldtongue" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="oldtongue" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="oldtongue" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="oldtongue" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        7、舌青或青紫
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="greentongue" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="greentongue" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="greentongue" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="greentongue" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="greentongue" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        8、剥苔(不含类剥苔)
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="peelmoss" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="peelmoss" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="peelmoss" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="peelmoss" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="peelmoss" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        9、舌下络脉紫红或绛紫
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="purpletongue" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="purpletongue" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="purpletongue" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="purpletongue" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="purpletongue" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        10、脉涩
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="poisonpulseacerbity" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="poisonpulseacerbity" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="poisonpulseacerbity" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="poisonpulseacerbity" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="poisonpulseacerbity" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <div class="unedit row">
+                    <div class="mycol-md-3">
+                        11、脉结代
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="clavusgeneration" value="1"/><span>很重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="clavusgeneration" value="2"/><span>比较重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="clavusgeneration" value="3"/><span>一般</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="clavusgeneration" value="4"/><span>不大重要</span>
+                    </div>
+                    <div class="mycol-md-2">
+                        <input type="radio" name="clavusgeneration" value="5"/><span>一点也不重要</span>
+                    </div>
+                </div>
+                <button class="btn btn-default" name="additem">&nbsp;&nbsp;添&nbsp;加&nbsp;&nbsp;</button>
+            </div>
+        </div>
+
+        <hr>
+        <button class="btn btn-default" id="save-del">&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;</button>
+    </div>
+</div>

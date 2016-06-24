@@ -1,0 +1,235 @@
+<link rel="stylesheet" href="../template/styles/css/bootstrap-datetimepicker.min.css">
+
+<script type="text/javascript" src="../template/plugins/bootstrap/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="../template/plugins/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="../template/plugins/ajaxfileupload/ajaxfileupload.js"></script>
+<style>
+    .myrow {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        margin-top: 5px;
+        padding-left: 20px;
+    }
+    div>span {
+        margin-top: 10px;
+    }
+    #uploadModal input{
+        margin: 10px;
+    }
+    #uploadModal label{
+        margin-top: 15px;
+    }
+    #downloadCon{
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        position: relative;
+        float: left;
+        margin-left: -1px;
+    }
+
+</style>
+<h2 class="sub-header">医案数据库</h2>
+<div id="conToolbar" class="btn-group table-control">
+    <button type="button" class="btn btn-default" id="addCon" title="添加">
+        <i class="glyphicon glyphicon-plus"></i>
+    </button>
+    <button type="button" class="btn btn-default" id="editCon" title="编辑">
+        <i class="glyphicon glyphicon-edit"></i>
+    </button>
+    <button type="button" class="btn btn-default" id="deleteCon" title="删除">
+        <i class="glyphicon glyphicon-trash"></i>
+    </button>
+    <button type="button" class="btn btn-default" id="uploadCon" title="上传数据" data-toggle="modal" data-target="#uploadModal">
+        <i class="glyphicon glyphicon-open"></i>
+    </button>
+    <a style="color: #333" href="/basisdown/">
+        <button type="button" class="btn btn-default" id="downloadCon" title="下载模板">
+            <i class="glyphicon glyphicon-save"></i>
+        </button>
+    </a>
+
+</div>
+
+<!--table field-->
+<div id="table">
+    <div class="search" style="float:right;margin-top: 10px;margin-left: 5px">
+        <input class="form-control" type="text" id="search" onkeyup="searchEvent()" placeholder="搜索">
+    </div>
+    <table class="table-control" id="consoliaTable" data-show-refresh="true" data-show-columns="true" data-toolbar="#conToolbar" data-pagination="true">
+    </table>
+</div>
+
+<!--hide edit and add panel-->
+<div class="row" style="display: none;" id="conPanel">
+    <div class="col-md-12 ">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h4 class="panel-title" id="changePanelName">添加医案数据</h4>
+            </div>
+            <div id="conForm">
+                <div id="validateForm">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3" id="adddiv">
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>医案名称</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id='conName' name="basisname" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>专家姓名</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input name="expertsname" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>患者姓名</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input name="patientname" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>患者性别</label>
+                                    </div>
+                                    <div class="col-md-4 col-md-offset-1">
+                                        <input type="radio" name="patientgender" value="男" checked/><span> 男</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="patientgender" value="女"/><span> 女</span>
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>患者年龄</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input name="patientage" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>就诊日期</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="input-group date form_date btn-date" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+                                            <input class="form-control" type="text" value="" readonly name="clinicdate">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>主诉</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea name="mainsuit" type="text" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>病史</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea name="medicalhistory" type="text" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>西医诊断</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea name="westdiagnosis" type="text" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>中医诊断</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea name="chdiagnosis" type="text" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>辨证</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea name="discriminate" type="text" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>处方</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea name="prescription" type="text" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row myrow">
+                                    <div class="col-md-2">
+                                        <label>按语</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea name="editorial" type="text" class="form-control"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--row-->
+                    </div>
+
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-offset-10">
+                                <button class="btn btn-default" id="cancel">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+                                <button class="btn btn-success" id="create">&nbsp;&nbsp;创建&nbsp;&nbsp;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--col-md-10-->
+</div> <!--row-->
+
+
+<!--上传的模态框-->
+<div class="modal fade" id="uploadModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">上传数据</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row myrow">
+            <div class="col-md-2">
+                <label>请选择</label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" id="upfile" class="form-control" readonly="readonly">
+                <input type="button" value="浏览" onclick="file1.click()" class="btn btn-default">
+                <input type="file" id="file1" name="file" accept="application/xls,application/cvs" class="hide" onchange="upfile.value=this.value.substring(12)"/>
+                <input type="button" onclick="Uploadfile()" class="btn btn-default" value="上传"/>
+            </div>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--itself js-->
+<script src="../template/modules/consilia/consilia.js"></script>
